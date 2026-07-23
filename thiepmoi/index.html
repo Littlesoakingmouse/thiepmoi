@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thiệp mời tham dự lễ tốt nghiệp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -11,12 +14,14 @@
 
     <main class="site-shell">
       <section class="cover section" id="cover" aria-label="Trang bìa thiệp mời">
-        <img class="cover-ribbon" src="./assets/ribbon-cropped.png" alt="" aria-hidden="true" />
-        <div class="ribbon-copy" aria-hidden="true">
-          <span>LÊ VIỆT ANH</span>
-          <small>BACHELOR OF BUSINESS ADMINISTRATION</small>
-          <b>K64</b>
-          <small>(2022-2026)</small>
+        <div class="ribbon-outer" aria-hidden="true">
+          <div class="ribbon-inner">
+            <div class="ribbon-content">
+              <span class="ribbon-small">National Economics University</span>
+              <span class="ribbon-large">Lê Việt Anh</span>
+            </div>
+            <span class="ribbon-k">K64<br />(2022-2026)</span>
+          </div>
         </div>
 
         <header class="academy">
@@ -35,7 +40,7 @@
 
         <figure class="cover-photo">
           <img src="../resource/face_image/LMD00032.jpeg" alt="Ảnh tốt nghiệp" />
-          <figcaption>VIET ANH</figcaption>
+          <figcaption>VIỆT ANH</figcaption>
         </figure>
 
         <p class="cover-note">EVERY END IS<br />A NEW BEGINNING.</p>
@@ -45,7 +50,7 @@
         <div class="silk-wave"></div>
         <div class="invite-card reveal">
           <p class="eyebrow">THÂN MỜI</p>
-          <h2>Bạn Thanh</h2>
+          <h2 id="inviteeName">Bạn Thanh</h2>
           <p class="time">10:45, THỨ BẢY</p>
           <div class="date-row">
             <span>THÁNG 07</span>
@@ -55,7 +60,7 @@
           <p class="place-label">Tại địa điểm:</p>
           <p class="place"><br />ĐẠI HỌC KINH TẾ QUỐC DÂN</p>
           <p class="address">207 Giải Phóng, Phường Bạch Mai, TP. Hà Nội, Việt Nam</p>
-          <a class="map-link" href="https://www.google.com/maps/place/National+Economics+University/@21.0000942,105.8399243,17z/data=!3m1!4b1!4m6!3m5!1s0x3135ac71752d8f79:0xd2ec575c01017afa!8m2!3d21.0000942!4d105.8424992!16s%2Fm%2F0bwj_9k?entry=ttu&g_ep=EgoyMDI2MDcyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer">XEM CHỈ ĐƯỜNG</a>
+          <a class="map-link" href="#map">XEM CHỈ ĐƯỜNG</a>
         </div>
         <img class="event-photo" src="../resource/face_image/SWT00457.jpeg" alt="Ảnh kỷ niệm cùng bạn bè" />
       </section>
@@ -69,7 +74,7 @@
             <img src="../resource/face_image/IMG_1212.JPG" alt="Ảnh cùng bạn bè" />
             <img src="../resource/face_image/IMG_1211.JPG" alt="Ảnh kỷ niệm" />
             <img src="../resource/face_image/SWT00457.jpeg" alt="Ảnh lớp tốt nghiệp" />
-            ư<img src="../resource/face_image/SWT00306.jpeg" alt="Ảnh nhóm tốt nghiệp" />
+            <img src="../resource/face_image/SWT00306.jpeg" alt="Ảnh nhóm tốt nghiệp" />
             <img src="../resource/face_image/IMG_1212.JPG" alt="Ảnh cùng bạn bè" />
             <img src="../resource/face_image/IMG_1211.JPG" alt="Ảnh kỷ niệm" />
             <img src="../resource/face_image/SWT00457.jpeg" alt="Ảnh lớp tốt nghiệp" />
@@ -115,12 +120,7 @@
           <button type="button" data-src="../resource/face_image/LMD00023.jpeg"><img src="../resource/face_image/LMD00023.jpeg" alt="" /></button>
           <button type="button" data-src="../resource/face_image/LMD00448.jpeg"><img src="../resource/face_image/LMD00448.jpeg" alt="" /></button>
           <button type="button" data-src="../resource/face_image/SWT00457.jpeg"><img src="../resource/face_image/SWT00457.jpeg" alt="" /></button>
-          <button type="button" data-src="../resource/face_image/LMD09890.jpeg"><img src="../resource/face_image/LMD09890.jpeg" alt="" /></button>
-          <button type="button" data-src="../resource/face_image/LMD00023.jpeg"><img src="../resource/face_image/LMD00023.jpeg" alt="" /></button>
-          <button type="button" data-src="../resource/face_image/LMD00448.jpeg"><img src="../resource/face_image/LMD00448.jpeg" alt="" /></button>
-          <button type="button" data-src="../resource/face_image/SWT00457.jpeg"><img src="../resource/face_image/SWT00457.jpeg" alt="" /></button>
-          <button type="button" data-src="../resource/face_image/LMD09890.jpeg"><img src="../resource/face_image/LMD09890.jpeg" alt="" /></button>
-
+          <button type="button" data-src="../resource/face_image/IMG_1212.JPG"><img src="../resource/face_image/IMG_1212.JPG" alt=""></button>
         </div>
       </section>
 
@@ -128,7 +128,7 @@
         <img src="../resource/face_image/LMD09931.jpeg" alt="Ảnh tốt nghiệp ngoài trời" />
         <form class="rsvp-form reveal" id="rsvpForm">
           <p>Vui lòng xác nhận sự tham dự của bạn để mình chuẩn bị đón tiếp một cách chu đáo nhất.</p>
-          <input name="name" type="text" placeholder="Tên của bạn" autocomplete="name" required />
+          <input id="guestNameInput" name="name" type="text" placeholder="Tên của bạn" autocomplete="name" required />
           <textarea name="message" rows="3" placeholder="Lời nhắn gửi"></textarea>
           <select name="attendance" required>
             <option value="">Xác nhận tham dự?</option>
@@ -140,6 +140,17 @@
           <span class="form-status" aria-live="polite"></span>
         </form>
       </section>
+
+      <section class="map-section section" id="map" aria-label="Bản đồ địa điểm">
+        <div class="map-container reveal">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d476620.74742431485!2d105.35821858588797!3d21.048701608402876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d21.096038399999998!2d105.5358976!4m5!1s0x3135ac71752d8f79%3A0xd2ec575c01017afa!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBLaW5oIFThur8gUXXhu5FjIETDom4gKE5FVSksIDIwNyDEkC4gR2nhuqNpIFBow7NuZywgQuG6oWNoIE1haSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!3m2!1d21.0000942!2d105.84249919999999!5e0!3m2!1svi!2s!4v1784654037956!5m2!1svi!2s" title="Bản đồ Đại học Kinh tế Quốc dân" loading="lazy" allowfullscreen=""></iframe>
+        </div>
+      </section>
+
+      <footer class="thank-you-footer">
+        <img src="../resource/face_image/LMD00108.jpeg" alt="Ảnh cảm ơn" />
+        <h2>Thank you!</h2>
+      </footer>
     </main>
 
     <button class="music-toggle" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc">♪</button>
