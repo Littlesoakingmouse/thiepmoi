@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thiệp mời tham dự lễ tốt nghiệp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -11,12 +14,14 @@
 
     <main class="site-shell">
       <section class="cover section" id="cover" aria-label="Trang bìa thiệp mời">
-        <img class="cover-ribbon" src="./assets/ribbon-cropped.png" alt="" aria-hidden="true" />
-        <div class="ribbon-copy" aria-hidden="true">
-          <span>LÊ VIỆT ANH</span>
-          <small>BACHELOR OF BUSINESS ADMINISTRATION</small>
-          <b>K64</b>
-          <small>(2022-2026)</small>
+        <div class="ribbon-outer" aria-hidden="true">
+          <div class="ribbon-inner">
+            <div class="ribbon-content">
+              <span class="ribbon-small">National Economics University</span>
+              <span class="ribbon-large">Lê Việt Anh</span>
+            </div>
+            <span class="ribbon-k">K64<br />(2022-2026)</span>
+          </div>
         </div>
 
         <header class="academy">
@@ -55,7 +60,7 @@
           <p class="place-label">Tại địa điểm:</p>
           <p class="place"><br />ĐẠI HỌC KINH TẾ QUỐC DÂN</p>
           <p class="address">207 Giải Phóng, Phường Bạch Mai, TP. Hà Nội, Việt Nam</p>
-          <a class="map-link" href="https://www.bing.com/maps/search?name=National+Economics+University&trfc=&mepi=0%7E%7EEmbedded%7ELargeMapLink&FORM=MPSRPL&style=r&q=National+Economics+University&ss=id.ypid%3AYND969E1292BEED14D&ppois=21.000085830688477_105.84249114990234_National+Economics+University&cp=21.000086%7E105.842491&lvl=15" target="_blank" rel="noreferrer">XEM CHỈ ĐƯỜNG</a>
+          <a class="map-link" href="#map">XEM CHỈ ĐƯỜNG</a>
         </div>
         <img class="event-photo" src="../resource/face_image/SWT00457.jpeg" alt="Ảnh kỷ niệm cùng bạn bè" />
       </section>
@@ -127,6 +132,17 @@
           <span class="form-status" aria-live="polite"></span>
         </form>
       </section>
+
+      <section class="map-section section" id="map" aria-label="Bản đồ địa điểm">
+        <div class="map-container reveal">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d476620.74742431485!2d105.35821858588797!3d21.048701608402876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d21.096038399999998!2d105.5358976!4m5!1s0x3135ac71752d8f79%3A0xd2ec575c01017afa!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBLaW5oIFThur8gUXXhu5FjIETDom4gKE5FVSksIDIwNyDEkC4gR2nhuqNpIFBow7NuZywgQuG6oWNoIE1haSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!3m2!1d21.0000942!2d105.84249919999999!5e0!3m2!1svi!2s!4v1784654037956!5m2!1svi!2s" title="Bản đồ Đại học Kinh tế Quốc dân" loading="lazy" allowfullscreen=""></iframe>
+        </div>
+      </section>
+
+      <footer class="thank-you-footer">
+        <img src="../resource/face_image/LMD00108.jpeg" alt="Ảnh cảm ơn" />
+        <h2>Thank you!</h2>
+      </footer>
     </main>
 
     <button class="music-toggle" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc">♪</button>
