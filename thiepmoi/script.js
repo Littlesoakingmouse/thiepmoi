@@ -4,14 +4,20 @@ const inviteeName = document.querySelector("#inviteeName");
 const guestNameInput = document.querySelector("#guestNameInput");
 const music = document.querySelector("#bgMusic");
 const musicToggle = document.querySelector("#musicToggle");
-const albumMain = document.querySelector("#albumMain");
+const albumTrack = document.querySelector("#albumTrack");
+const albumView = document.querySelector(".album-view");
 const thumbButtons = Array.from(document.querySelectorAll(".thumbs button"));
 const prevButton = document.querySelector(".album-nav.prev");
 const nextButton = document.querySelector(".album-nav.next");
 const rsvpForm = document.querySelector("#rsvpForm");
 const formStatus = document.querySelector(".form-status");
 const RSVPS_KEY = "graduation-rsvps";
+const ALBUM_AUTO_DELAY = 3600;
+const ALBUM_SLIDE_GAP = 14;
+const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || false;
 let albumIndex = 0;
+let albumAutoTimer;
+let isAlbumVisible = !albumView;
 let apiAvailable = window.location.protocol !== "file:";
 
 if (invitedName) {
@@ -69,43 +75,134 @@ async function saveRsvp(entry) {
   saveRsvpLocal(entry);
 }
 
-function setAlbum(index) {
-  if (!albumMain || thumbButtons.length === 0) return;
+function setAlbum(index, options = {}) {
+  if (!albumTrack || thumbButtons.length === 0) return;
   albumIndex = (index + thumbButtons.length) % thumbButtons.length;
   const active = thumbButtons[albumIndex];
-  albumMain.classList.add("switching");
-  window.setTimeout(() => {
-    albumMain.src = active.dataset.src;
-    albumMain.addEventListener("load", () => albumMain.classList.remove("switching"), { once: true });
-    window.setTimeout(() => albumMain.classList.remove("switching"), 420);
-  }, 160);
+  albumTrack.style.transform = `translate3d(calc(${-albumIndex * 100}% - ${albumIndex * ALBUM_SLIDE_GAP}px), 0, 0)`;
   thumbButtons.forEach((button) => button.classList.toggle("active", button === active));
   active.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  if (options.userAction) restartAlbumAutoScroll();
+}
+
+function stopAlbumAutoScroll() {
+  window.clearInterval(albumAutoTimer);
+}
+
+function startAlbumAutoScroll() {
+  if (!isAlbumVisible) return;
+  if (!albumTrack || thumbButtons.length < 2 || prefersReducedMotion) return;
+  stopAlbumAutoScroll();
+  albumAutoTimer = window.setInterval(() => setAlbum(albumIndex + 1), ALBUM_AUTO_DELAY);
+}
+
+function restartAlbumAutoScroll() {
+  stopAlbumAutoScroll();
+  startAlbumAutoScroll();
 }
 
 thumbButtons.forEach((button, index) => {
-  button.addEventListener("click", () => setAlbum(index));
+  button.addEventListener("click", () => setAlbum(index, { userAction: true }));
 });
 
-prevButton?.addEventListener("click", () => setAlbum(albumIndex - 1));
-nextButton?.addEventListener("click", () => setAlbum(albumIndex + 1));
+prevButton?.addEventListener("click", () => setAlbum(albumIndex - 1, { userAction: true }));
+nextButton?.addEventListener("click", () => setAlbum(albumIndex + 1, { userAction: true }));
+albumTrack?.addEventListener("pointerenter", stopAlbumAutoScroll);
+albumTrack?.addEventListener("pointerleave", startAlbumAutoScroll);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopAlbumAutoScroll();
+    return;
+  }
+  startAlbumAutoScroll();
+});
+
+if (albumView && albumTrack && !prefersReducedMotion) {
+  const albumObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      isAlbumVisible = entry.isIntersecting;
+      if (isAlbumVisible) {
+        startAlbumAutoScroll();
+        return;
+      }
+      stopAlbumAutoScroll();
+    },
+    { threshold: 0.45 }
+  );
+  albumObserver.observe(albumView);
+} else {
+  startAlbumAutoScroll();
+}
+
+let shouldAutoPlayMusic = true;
+
+function syncMusicButton(isPlaying) {
+  if (!musicToggle) return;
+  musicToggle.classList.toggle("playing", isPlaying);
+  musicToggle.textContent = isPlaying ? "♫" : "♪";
+}
+
+async function playMusic() {
+  if (!music) return false;
+  try {
+    music.muted = false;
+    music.volume = 0.72;
+    await music.play();
+    syncMusicButton(true);
+    return true;
+  } catch {
+    syncMusicButton(false);
+    return false;
+  }
+}
+
+function pauseMusic() {
+  if (!music) return;
+  music.pause();
+  syncMusicButton(false);
+}
+
+function removeAutoPlayFallback() {
+  ["pointerdown", "touchstart", "keydown", "scroll"].forEach((eventName) => {
+    window.removeEventListener(eventName, startMusicWithFallback);
+  });
+}
+
+async function startMusicWithFallback() {
+  if (!shouldAutoPlayMusic) return;
+  const didPlay = await playMusic();
+  if (didPlay) removeAutoPlayFallback();
+}
+
+function enableAutoPlayFallback() {
+  ["pointerdown", "touchstart", "keydown", "scroll"].forEach((eventName) => {
+    window.addEventListener(eventName, startMusicWithFallback, { passive: true });
+  });
+}
+
+if (music) {
+  syncMusicButton(false);
+  startMusicWithFallback();
+  enableAutoPlayFallback();
+  window.addEventListener("pageshow", startMusicWithFallback);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) startMusicWithFallback();
+  });
+}
 
 musicToggle?.addEventListener("click", async () => {
   if (!music) return;
   if (music.paused) {
-    try {
-      await music.play();
-      musicToggle.classList.add("playing");
-      musicToggle.textContent = "♫";
-    } catch {
-      musicToggle.textContent = "♪";
-    }
+    shouldAutoPlayMusic = true;
+    await playMusic();
     return;
   }
 
-  music.pause();
-  musicToggle.classList.remove("playing");
-  musicToggle.textContent = "♪";
+  shouldAutoPlayMusic = false;
+  removeAutoPlayFallback();
+  pauseMusic();
 });
 
 const observer = new IntersectionObserver(

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <audio id="bgMusic" src="./assets/music.m4a" loop preload="auto"></audio>
+    <audio id="bgMusic" src="./assets/music.m4a" loop preload="auto" autoplay playsinline></audio>
 
     <main class="site-shell">
       <section class="cover section" id="cover" aria-label="Trang bìa thiệp mời">
@@ -112,7 +112,13 @@
         <h2>The Album</h2>
         <div class="album-view reveal">
           <button class="album-nav prev" type="button" aria-label="Ảnh trước">‹</button>
-          <img id="albumMain" src="../resource/face_image/LMD09890.jpeg" alt="Ảnh trong album tốt nghiệp" />
+          <div class="album-track" id="albumTrack">
+            <img src="../resource/face_image/LMD09890.jpeg" alt="Ảnh trong album tốt nghiệp" />
+            <img src="../resource/face_image/LMD00023.jpeg" alt="Ảnh trong album tốt nghiệp" />
+            <img src="../resource/face_image/LMD00448.jpeg" alt="Ảnh trong album tốt nghiệp" />
+            <img src="../resource/face_image/SWT00457.jpeg" alt="Ảnh trong album tốt nghiệp" />
+            <img src="../resource/face_image/IMG_1212.JPG" alt="Ảnh trong album tốt nghiệp" />
+          </div>
           <button class="album-nav next" type="button" aria-label="Ảnh sau">›</button>
         </div>
         <div class="thumbs" aria-label="Danh sách ảnh album">
