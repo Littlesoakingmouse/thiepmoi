@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo thư mời tốt nghiệp</title>
+    <link rel="stylesheet" href="./creator.css" />
+  </head>
+  <body>
+    <main class="creator-shell">
+      <header class="creator-header">
+        <p>Graduation Invitation</p>
+        <h1>Tạo thư mời cá nhân</h1>
+        <span>Nhập tên người muốn mời để tạo link thiệp riêng. Khi khách xác nhận, dữ liệu sẽ được lưu trên trình duyệt này.</span>
+      </header>
+
+      <section class="creator-card">
+        <form id="inviteForm" class="invite-form">
+          <label for="guestName">Tên người được mời</label>
+          <div class="input-row">
+            <input id="guestName" name="guestName" type="text" placeholder="Ví dụ: Bạn Thanh" autocomplete="name" required />
+            <button type="submit">Tạo thư mời</button>
+          </div>
+        </form>
+
+        <div class="result-box" id="resultBox" hidden>
+          <label for="generatedLink">Link thư mời</label>
+          <textarea id="generatedLink" readonly rows="3"></textarea>
+          <div class="action-row">
+            <button id="copyLink" type="button">Copy link</button>
+            <a id="openInvite" href="./index.html" target="_blank" rel="noreferrer">Mở thư mời</a>
+          </div>
+          <p class="status" id="copyStatus" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="creator-grid">
+        <article class="list-card">
+          <div class="section-title">
+            <h2>Danh sách đã tạo</h2>
+            <button id="clearInvites" type="button">Xóa danh sách</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tên</th>
+                  <th>Link</th>
+                  <th>Thời gian</th>
+                </tr>
+              </thead>
+              <tbody id="inviteList"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="list-card">
+          <div class="section-title">
+            <h2>Xác nhận & lời nhắn</h2>
+            <div>
+              <button id="exportCsv" type="button">Xuất CSV</button>
+              <button id="clearRsvps" type="button">Xóa RSVP</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Khách mời</th>
+                  <th>Tham dự</th>
+                  <th>Lời nhắn</th>
+                  <th>Thời gian</th>
+                </tr>
+              </thead>
+              <tbody id="rsvpList"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./creator.js"></script>
+  </body>
+</html>

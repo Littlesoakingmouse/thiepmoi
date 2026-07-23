@@ -1,0 +1,341 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  color: #151827;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)),
+    url("../resource/background.jpg") center / cover fixed;
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.creator-shell {
+  width: min(calc(100% - 28px), 980px);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 24px 0 40px;
+  overflow-x: hidden;
+}
+
+.creator-header {
+  margin-bottom: 18px;
+}
+
+.creator-header p,
+.creator-header h1,
+.creator-header span {
+  margin: 0;
+}
+
+.creator-header p {
+  color: #d71e2b;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.creator-header h1 {
+  margin-top: 6px;
+  color: #10265c;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.creator-header span {
+  display: block;
+  margin-top: 10px;
+  max-width: 680px;
+  color: #51586a;
+  line-height: 1.5;
+}
+
+.creator-card,
+.list-card {
+  border: 1px solid rgba(16, 38, 92, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 42px rgba(18, 24, 38, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.creator-card {
+  padding: 18px;
+}
+
+.creator-card,
+.list-card,
+.input-row,
+.result-box,
+.table-wrap {
+  max-width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #303747;
+  font-weight: 700;
+}
+
+.input-row {
+  display: grid;
+  gap: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #a9afbd;
+  border-radius: 8px;
+  padding: 12px 13px;
+  color: #151827;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button,
+.action-row a {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 16px;
+  color: #fff;
+  background: #10265c;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.secondary {
+  color: #10265c;
+  background: #eef2ff;
+}
+
+.result-box {
+  margin-top: 18px;
+}
+
+.action-row,
+.section-title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.action-row {
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+.status {
+  min-height: 20px;
+  margin: 10px 0 0;
+  color: #10265c;
+  font-size: 13px;
+}
+
+.creator-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.list-card {
+  min-width: 0;
+  padding: 16px;
+}
+
+.section-title {
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.section-title button {
+  min-height: 36px;
+  padding: 0 12px;
+  color: #10265c;
+  background: #eef2ff;
+  font-size: 13px;
+}
+
+.table-wrap {
+  border: 1px solid rgba(16, 38, 92, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+thead {
+  display: none;
+}
+
+tbody {
+  display: block;
+  width: 100%;
+}
+
+tr {
+  display: block;
+  padding: 10px 12px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+tr:last-child {
+  border-bottom: 0;
+}
+
+th,
+td {
+  padding: 6px 0;
+  text-align: left;
+  vertical-align: top;
+  font-size: 14px;
+}
+
+td {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+td::before {
+  color: #384151;
+  font-weight: 700;
+}
+
+#inviteList td:nth-child(1)::before {
+  content: "Tên";
+}
+
+#inviteList td:nth-child(2)::before {
+  content: "Link";
+}
+
+#inviteList td:nth-child(3)::before {
+  content: "Thời gian";
+}
+
+#rsvpList td:nth-child(1)::before {
+  content: "Khách mời";
+}
+
+#rsvpList td:nth-child(2)::before {
+  content: "Tham dự";
+}
+
+#rsvpList td:nth-child(3)::before {
+  content: "Lời nhắn";
+}
+
+#rsvpList td:nth-child(4)::before {
+  content: "Thời gian";
+}
+
+th {
+  color: #384151;
+  background: #f7f8fb;
+  font-weight: 700;
+}
+
+td a {
+  color: #10265c;
+  font-weight: 700;
+}
+
+.empty-row {
+  display: block;
+  color: #7a8292;
+  text-align: center;
+}
+
+#inviteList td.empty-row::before,
+#rsvpList td.empty-row::before,
+td.empty-row::before {
+  content: none;
+}
+
+@media (min-width: 720px) {
+  .creator-shell {
+    width: min(calc(100% - 48px), 980px);
+    padding: 34px 0 56px;
+  }
+
+  .input-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .creator-card,
+  .list-card,
+  input,
+  textarea,
+  button,
+  .action-row a,
+  .table-wrap {
+    border-radius: 8px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    display: table;
+    min-width: 620px;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    display: table-row;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  th,
+  td {
+    display: table-cell;
+    padding: 12px;
+    border-bottom: 1px solid #edf0f5;
+  }
+
+  tbody {
+    display: table-row-group;
+  }
+
+  td::before {
+    content: none !important;
+  }
+}
