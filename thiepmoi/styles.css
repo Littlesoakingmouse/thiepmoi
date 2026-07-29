@@ -188,12 +188,11 @@ img {
 .ceremony-title {
   position: relative;
   z-index: 3;
-  margin: 24px 0 28px 84px;
+  margin: 24px 8px 28px 92px;
   text-align: center;
   animation: slideDown 0.8s ease 0.32s both;
 }
 
-.ceremony-title p,
 .memory h2 span,
 .album h2,
 .letter-card h2,
@@ -204,9 +203,12 @@ img {
 
 .ceremony-title p {
   margin: 0;
-  font-size: 32px;
-  line-height: 0.95;
-  letter-spacing: 2px;
+  font-family: "Dancing Script", "Segoe UI", cursive;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .ceremony-title span,
