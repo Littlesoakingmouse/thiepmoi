@@ -84,10 +84,7 @@ img {
 .ribbon-inner {
   position: absolute;
   inset: 0 3px 3px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px 0 20px;
+  overflow: hidden;
   background:
     radial-gradient(circle at 60% 26%, rgba(64, 94, 154, 0.42), transparent 22%),
     linear-gradient(165deg, #071021, #030713 54%, #081838);
@@ -95,35 +92,50 @@ img {
 }
 
 .ribbon-content {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  gap: 12px;
-  writing-mode: vertical-rl;
+  position: absolute;
+  inset: 28px 0 92px;
 }
 
 .ribbon-small {
+  position: absolute;
+  top: 0;
+  left: 50%;
   color: var(--gold);
   font-size: 8px;
   font-weight: 500;
   letter-spacing: 2px;
+  writing-mode: vertical-rl;
+  transform: translateX(-50%);
 }
 
 .ribbon-large {
+  position: absolute;
+  top: 70%;
+  left: 50%;
   color: #fff;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  font-family: "Lobster", "Dancing Script", "Segoe UI", cursive;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 1.1px;
+  text-transform: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: translate(-50%, -50%);
 }
 
 .ribbon-k {
-  margin-bottom: 35px;
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  margin: 0;
   color: var(--gold);
   font-size: 10px;
   font-weight: 700;
   line-height: 1.4;
   text-align: center;
+  transform: translateX(-50%);
 }
 
 .academy {
@@ -1001,7 +1013,7 @@ img {
   }
 
   .ribbon-large {
-    font-size: 20px;
+    font-size: 30px;
   }
 
   .academy,
