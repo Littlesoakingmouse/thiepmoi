@@ -54,17 +54,35 @@ img {
     linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.92)),
     url("../resource/background.jpg") center / cover;
   transition: opacity 1s ease, visibility 1s ease, filter 1s ease;
+  overflow: hidden;
 }
 
 .letter-gate::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -18%;
   background:
-    radial-gradient(circle at 22% 43%, rgba(255, 255, 255, 0.88) 0 14px, transparent 15px),
-    radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.86) 0 13px, transparent 14px),
-    radial-gradient(circle at 74% 63%, rgba(255, 255, 255, 0.82) 0 11px, transparent 12px);
-  opacity: 0.7;
+    linear-gradient(115deg, transparent 10%, rgba(255, 255, 255, 0.62) 28%, transparent 46%),
+    radial-gradient(circle at 22% 43%, rgba(255, 255, 255, 0.9) 0 11px, transparent 12px),
+    radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.82) 0 10px, transparent 11px),
+    radial-gradient(circle at 74% 63%, rgba(255, 255, 255, 0.74) 0 8px, transparent 9px);
+  opacity: 0.62;
+  transform: translate3d(-8%, -6%, 0) rotate(-6deg);
+  animation: letterLightSweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.letter-gate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(198, 165, 101, 0.34) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.82) 0 1px, transparent 2px);
+  background-position: 12% 18%, 78% 70%;
+  background-size: 96px 110px, 132px 144px;
+  opacity: 0.42;
+  animation: letterSparkles 9s linear infinite;
   pointer-events: none;
 }
 
@@ -78,14 +96,15 @@ img {
 .letter-paper {
   position: relative;
   width: min(100%, 430px);
-  min-height: min(88svh, 760px);
+  min-height: min(92svh, 780px);
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr;
   justify-items: center;
-  padding: 58px 26px 42px;
+  align-items: start;
+  padding: 54px 12px 22px;
   color: #746a5f;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.9)),
+    linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.94)),
     url("../resource/background.jpg") center / cover;
   box-shadow: 0 28px 60px rgba(15, 23, 42, 0.14);
   overflow: hidden;
@@ -94,69 +113,36 @@ img {
 
 .letter-paper::before,
 .letter-paper::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 96px;
-  height: 132px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 22%, rgba(206, 173, 113, 0.8) 0 5px, transparent 6px),
-    radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, 0.95) 0 18px, transparent 19px),
-    radial-gradient(ellipse at 28% 34%, rgba(255, 255, 255, 0.88) 0 20px, transparent 21px),
-    radial-gradient(ellipse at 72% 34%, rgba(255, 255, 255, 0.88) 0 20px, transparent 21px),
-    radial-gradient(ellipse at 50% 54%, rgba(255, 255, 255, 0.86) 0 20px, transparent 21px);
-  filter: drop-shadow(0 8px 12px rgba(120, 120, 120, 0.13));
-  opacity: 0.88;
-  pointer-events: none;
-}
-
-.letter-paper::before {
-  left: 28px;
-  top: 260px;
-}
-
-.letter-paper::after {
-  right: 18px;
-  top: 396px;
-  transform: scale(0.86) rotate(8deg);
-}
-
-.letter-paper p {
-  position: relative;
-  z-index: 3;
-  margin: 0 0 24px;
-  color: #817568;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
+  content: none;
 }
 
 .letter-paper h1 {
   position: relative;
   z-index: 3;
-  width: min(100%, 360px);
+  width: min(100%, 400px);
   margin: 0;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(116, 106, 95, 0.36);
-  color: #867d72;
+  padding-bottom: 12px;
+  color: #73685e;
   font-family: "Dancing Script", "Segoe UI", cursive;
-  font-size: 38px;
-  font-weight: 600;
-  line-height: 1;
+  font-size: clamp(34px, 9.5vw, 46px);
+  font-weight: 700;
+  line-height: 1.05;
   text-align: center;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.75);
 }
 
 .envelope-button {
   position: relative;
   z-index: 4;
-  align-self: center;
-  width: min(82vw, 330px);
-  height: 218px;
-  margin-top: 64px;
+  align-self: start;
+  width: min(100%, 398px);
+  aspect-ratio: 2 / 3;
+  max-height: min(74svh, 600px);
+  margin-top: 6px;
+  padding: 0;
   border: 0;
   background: transparent;
+  cursor: pointer;
   transform-origin: center;
   transition: transform 0.35s ease;
 }
@@ -165,91 +151,19 @@ img {
   transform: translateY(-4px) scale(1.015);
 }
 
-.envelope {
+.letter-image {
   position: absolute;
   inset: 0;
   display: block;
-  filter: drop-shadow(0 18px 24px rgba(120, 102, 82, 0.22));
-}
-
-.envelope-back,
-.envelope-front,
-.envelope-flap {
-  position: absolute;
-  inset: 0;
-  border-radius: 4px;
-}
-
-.envelope-back {
-  background: linear-gradient(145deg, #f2ecdc, #d7cbb8);
-}
-
-.envelope-front {
-  background:
-    linear-gradient(32deg, transparent 49.5%, rgba(116, 92, 70, 0.28) 50%, transparent 50.7%),
-    linear-gradient(148deg, transparent 49.5%, rgba(116, 92, 70, 0.28) 50%, transparent 50.7%),
-    linear-gradient(to top, #e4dbc9, #f4eedf);
-  clip-path: polygon(0 22%, 50% 58%, 100% 22%, 100% 100%, 0 100%);
-}
-
-.envelope-flap {
-  z-index: 2;
-  background: linear-gradient(180deg, #f7f1e4, #d8cbb7);
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
-  transform-origin: top center;
-  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.seal {
-  position: absolute;
-  left: 50%;
-  top: 53%;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  color: #f5dfbd;
-  background: radial-gradient(circle at 35% 35%, #d4a66b, #8d5633);
-  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.28), 0 6px 14px rgba(105, 72, 44, 0.28);
-  transform: translate(-50%, -50%);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-
-.tap-hand {
-  position: absolute;
-  left: 55%;
-  top: 57%;
-  z-index: 6;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 34px;
-  text-shadow: 0 2px 8px rgba(88, 74, 59, 0.45);
-  animation: tapPulse 1.5s ease-in-out infinite;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 28px rgba(70, 64, 58, 0.24));
   pointer-events: none;
-}
-
-.letter-paper time {
-  position: relative;
-  z-index: 3;
-  color: #7d7164;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 32px;
-  letter-spacing: 4px;
 }
 
 .letter-gate.opening .envelope-button {
   animation: envelopeLeave 1s ease both;
-}
-
-.letter-gate.opening .envelope-flap {
-  transform: rotateX(180deg);
-}
-
-.letter-gate.opening .seal,
-.letter-gate.opening .tap-hand {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.72);
 }
 
 .site-shell {
@@ -1232,15 +1146,29 @@ body.invitation-open .site-shell {
   }
 }
 
-@keyframes tapPulse {
+@keyframes letterLightSweep {
   0%,
   100% {
-    opacity: 0.72;
-    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.36;
+    transform: translate3d(-18%, -9%, 0) rotate(-7deg);
   }
   50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.68;
+    transform: translate3d(12%, 4%, 0) rotate(-7deg);
+  }
+}
+
+@keyframes letterSparkles {
+  0% {
+    background-position: 12% 18%, 78% 70%;
+    opacity: 0.28;
+  }
+  45% {
+    opacity: 0.5;
+  }
+  100% {
+    background-position: 18% 12%, 70% 82%;
+    opacity: 0.3;
   }
 }
 

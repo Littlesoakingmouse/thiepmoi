@@ -24,7 +24,7 @@ let isAlbumVisible = !albumView;
 let apiAvailable = window.location.protocol !== "file:";
 
 if (invitedName) {
-  if (letterGuestName) letterGuestName.textContent = `${invitedName} & gia đình`;
+  if (letterGuestName) letterGuestName.textContent = `Gửi ${invitedName}`;
   if (inviteeName) inviteeName.textContent = invitedName;
   if (guestNameInput) guestNameInput.value = invitedName;
 }
