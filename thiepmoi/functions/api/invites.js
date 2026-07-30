@@ -12,10 +12,10 @@ function json(payload, status = 200) {
 
 function getSupabaseConfig(env) {
   const url = String(env.SUPABASE_URL || "").replace(/\/$/, "");
-  const key = String(env.SUPABASE_SERVICE_ROLE_KEY || "");
+  const key = String(env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SECRET_KEY || "");
 
   if (!url || !key) {
-    throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
+    throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SECRET_KEY");
   }
 
   return { url, key };

@@ -22,7 +22,7 @@ Neu deploy qua Git:
 Them Environment variables:
 
 - `SUPABASE_URL`: Project URL cua Supabase
-- `SUPABASE_SERVICE_ROLE_KEY`: service_role key cua Supabase
+- `SUPABASE_SERVICE_ROLE_KEY`: service_role key cua Supabase, hoac dung `SUPABASE_SECRET_KEY` neu Supabase hien key moi dang `sb_secret_...`
 - `ADMIN_TOKEN`: mat khau rieng de mo trang quan tri tao thu moi
 
 ## 3. Chay build local de kiem tra
