@@ -13,9 +13,11 @@ const exportCsv = document.querySelector("#exportCsv");
 
 const INVITES_KEY = "graduation-invites";
 const RSVPS_KEY = "graduation-rsvps";
+const ADMIN_TOKEN_KEY = "graduation-admin-token";
 let invitesCache = [];
 let rsvpsCache = [];
 let apiAvailable = window.location.protocol !== "file:";
+let adminToken = localStorage.getItem(ADMIN_TOKEN_KEY) || "";
 
 function readList(key) {
   try {
@@ -30,17 +32,54 @@ function writeList(key, value) {
 }
 
 async function apiRequest(path, options = {}) {
+  const { admin = false, ...requestOptions } = options;
+  const headers = {
+    "Content-Type": "application/json",
+    ...(requestOptions.headers || {}),
+  };
+
+  if (admin && adminToken) headers["x-admin-token"] = adminToken;
+
   const response = await fetch(path, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
+    ...requestOptions,
+    headers,
   });
 
-  if (!response.ok) throw new Error(`API error ${response.status}`);
+  if (!response.ok) {
+    const error = new Error(`API error ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
   if (response.status === 204) return null;
   return response.json();
+}
+
+function requestAdminToken() {
+  const token = window.prompt("Nhap ADMIN_TOKEN de quan ly thu moi va RSVP:");
+  if (!token || !token.trim()) return false;
+  adminToken = token.trim();
+  localStorage.setItem(ADMIN_TOKEN_KEY, adminToken);
+  return true;
+}
+
+async function adminRequest(path, options = {}) {
+  const sentToken = adminToken;
+  try {
+    return await apiRequest(path, { ...options, admin: true });
+  } catch (error) {
+    if (error.status === 401) {
+      if (sentToken !== adminToken) {
+        return apiRequest(path, { ...options, admin: true });
+      }
+
+      adminToken = "";
+      localStorage.removeItem(ADMIN_TOKEN_KEY);
+      if (requestAdminToken()) {
+        return apiRequest(path, { ...options, admin: true });
+      }
+    }
+    throw error;
+  }
 }
 
 function formatDate(value) {
@@ -138,8 +177,8 @@ async function loadDashboard() {
   if (apiAvailable) {
     try {
       const [invites, rsvps] = await Promise.all([
-        apiRequest("/api/invites"),
-        apiRequest("/api/rsvps"),
+        adminRequest("/api/invites"),
+        adminRequest("/api/rsvps"),
       ]);
       invitesCache = invites;
       rsvpsCache = rsvps;
@@ -174,7 +213,7 @@ inviteForm.addEventListener("submit", async (event) => {
 
   try {
     const savedInvite = apiAvailable
-      ? await apiRequest("/api/invites", {
+      ? await adminRequest("/api/invites", {
           method: "POST",
           body: JSON.stringify({ name, url }),
         })
@@ -207,7 +246,7 @@ copyLink.addEventListener("click", async () => {
 clearInvites.addEventListener("click", async () => {
   if (!confirm("Xóa toàn bộ danh sách thư mời đã tạo?")) return;
   try {
-    if (apiAvailable) await apiRequest("/api/invites", { method: "DELETE" });
+    if (apiAvailable) await adminRequest("/api/invites", { method: "DELETE" });
   } catch {
     apiAvailable = false;
   }
@@ -219,7 +258,7 @@ clearInvites.addEventListener("click", async () => {
 clearRsvps.addEventListener("click", async () => {
   if (!confirm("Xóa toàn bộ xác nhận và lời nhắn đã lưu?")) return;
   try {
-    if (apiAvailable) await apiRequest("/api/rsvps", { method: "DELETE" });
+    if (apiAvailable) await adminRequest("/api/rsvps", { method: "DELETE" });
   } catch {
     apiAvailable = false;
   }

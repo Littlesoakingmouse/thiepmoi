@@ -10,7 +10,24 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <audio id="bgMusic" src="./assets/music.m4a" loop preload="auto" autoplay playsinline></audio>
+    <audio id="bgMusic" src="./assets/music.m4a" loop preload="auto" playsinline></audio>
+
+    <div class="letter-gate" id="letterGate" role="dialog" aria-modal="true" aria-label="Mở thiệp mời">
+      <div class="letter-paper">
+        <p>TRÂN TRỌNG KÍNH MỜI:</p>
+        <h1 id="letterGuestName">Bạn Minh & gia đình</h1>
+        <button class="envelope-button" id="openInvitation" type="button" aria-label="Mở thư mời">
+          <span class="envelope">
+            <span class="envelope-back"></span>
+            <span class="envelope-flap"></span>
+            <span class="envelope-front"></span>
+            <span class="seal">✦</span>
+          </span>
+          <span class="tap-hand" aria-hidden="true">☝</span>
+        </button>
+        <time>25.07.2026</time>
+      </div>
+    </div>
 
     <main class="site-shell">
       <section class="cover section" id="cover" aria-label="Trang bìa thiệp mời">

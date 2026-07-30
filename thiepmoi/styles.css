@@ -42,6 +42,227 @@ img {
   max-width: 100%;
 }
 
+.letter-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  background:
+    radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.95), transparent 36%),
+    linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.92)),
+    url("../resource/background.jpg") center / cover;
+  transition: opacity 1s ease, visibility 1s ease, filter 1s ease;
+}
+
+.letter-gate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 43%, rgba(255, 255, 255, 0.88) 0 14px, transparent 15px),
+    radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.86) 0 13px, transparent 14px),
+    radial-gradient(circle at 74% 63%, rgba(255, 255, 255, 0.82) 0 11px, transparent 12px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.letter-gate.opening {
+  opacity: 0;
+  visibility: hidden;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.letter-paper {
+  position: relative;
+  width: min(100%, 430px);
+  min-height: min(88svh, 760px);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  justify-items: center;
+  padding: 58px 26px 42px;
+  color: #746a5f;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.9)),
+    url("../resource/background.jpg") center / cover;
+  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+  animation: letterFloat 4.8s ease-in-out infinite;
+}
+
+.letter-paper::before,
+.letter-paper::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 96px;
+  height: 132px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(206, 173, 113, 0.8) 0 5px, transparent 6px),
+    radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, 0.95) 0 18px, transparent 19px),
+    radial-gradient(ellipse at 28% 34%, rgba(255, 255, 255, 0.88) 0 20px, transparent 21px),
+    radial-gradient(ellipse at 72% 34%, rgba(255, 255, 255, 0.88) 0 20px, transparent 21px),
+    radial-gradient(ellipse at 50% 54%, rgba(255, 255, 255, 0.86) 0 20px, transparent 21px);
+  filter: drop-shadow(0 8px 12px rgba(120, 120, 120, 0.13));
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.letter-paper::before {
+  left: 28px;
+  top: 260px;
+}
+
+.letter-paper::after {
+  right: 18px;
+  top: 396px;
+  transform: scale(0.86) rotate(8deg);
+}
+
+.letter-paper p {
+  position: relative;
+  z-index: 3;
+  margin: 0 0 24px;
+  color: #817568;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+}
+
+.letter-paper h1 {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 360px);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(116, 106, 95, 0.36);
+  color: #867d72;
+  font-family: "Dancing Script", "Segoe UI", cursive;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+}
+
+.envelope-button {
+  position: relative;
+  z-index: 4;
+  align-self: center;
+  width: min(82vw, 330px);
+  height: 218px;
+  margin-top: 64px;
+  border: 0;
+  background: transparent;
+  transform-origin: center;
+  transition: transform 0.35s ease;
+}
+
+.envelope-button:hover {
+  transform: translateY(-4px) scale(1.015);
+}
+
+.envelope {
+  position: absolute;
+  inset: 0;
+  display: block;
+  filter: drop-shadow(0 18px 24px rgba(120, 102, 82, 0.22));
+}
+
+.envelope-back,
+.envelope-front,
+.envelope-flap {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+
+.envelope-back {
+  background: linear-gradient(145deg, #f2ecdc, #d7cbb8);
+}
+
+.envelope-front {
+  background:
+    linear-gradient(32deg, transparent 49.5%, rgba(116, 92, 70, 0.28) 50%, transparent 50.7%),
+    linear-gradient(148deg, transparent 49.5%, rgba(116, 92, 70, 0.28) 50%, transparent 50.7%),
+    linear-gradient(to top, #e4dbc9, #f4eedf);
+  clip-path: polygon(0 22%, 50% 58%, 100% 22%, 100% 100%, 0 100%);
+}
+
+.envelope-flap {
+  z-index: 2;
+  background: linear-gradient(180deg, #f7f1e4, #d8cbb7);
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  transform-origin: top center;
+  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.seal {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  color: #f5dfbd;
+  background: radial-gradient(circle at 35% 35%, #d4a66b, #8d5633);
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.28), 0 6px 14px rgba(105, 72, 44, 0.28);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.tap-hand {
+  position: absolute;
+  left: 55%;
+  top: 57%;
+  z-index: 6;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 34px;
+  text-shadow: 0 2px 8px rgba(88, 74, 59, 0.45);
+  animation: tapPulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.letter-paper time {
+  position: relative;
+  z-index: 3;
+  color: #7d7164;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  letter-spacing: 4px;
+}
+
+.letter-gate.opening .envelope-button {
+  animation: envelopeLeave 1s ease both;
+}
+
+.letter-gate.opening .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.letter-gate.opening .seal,
+.letter-gate.opening .tap-hand {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.72);
+}
+
+.site-shell {
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+body.invitation-open .site-shell {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .site-shell {
   width: 100vw;
   max-width: 430px;
@@ -50,7 +271,6 @@ img {
   overflow: hidden;
   background: var(--mist);
   box-shadow: 0 0 60px rgba(6, 10, 22, 0.22);
-  animation: pageFade 0.8s ease both;
 }
 
 .section {
@@ -999,6 +1219,43 @@ img {
   }
   50% {
     transform: scale(1.08);
+  }
+}
+
+@keyframes letterFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes tapPulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+
+@keyframes envelopeLeave {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1.04);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(70px) scale(0.86);
   }
 }
 

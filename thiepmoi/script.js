@@ -1,5 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const invitedName = (params.get("guest") || params.get("name") || "").trim();
+const letterGate = document.querySelector("#letterGate");
+const openInvitation = document.querySelector("#openInvitation");
+const letterGuestName = document.querySelector("#letterGuestName");
 const inviteeName = document.querySelector("#inviteeName");
 const guestNameInput = document.querySelector("#guestNameInput");
 const music = document.querySelector("#bgMusic");
@@ -21,6 +24,7 @@ let isAlbumVisible = !albumView;
 let apiAvailable = window.location.protocol !== "file:";
 
 if (invitedName) {
+  if (letterGuestName) letterGuestName.textContent = `${invitedName} & gia đình`;
   if (inviteeName) inviteeName.textContent = invitedName;
   if (guestNameInput) guestNameInput.value = invitedName;
 }
@@ -182,7 +186,9 @@ function enableAutoPlayFallback() {
   });
 }
 
-if (music) {
+if (!letterGate) document.body.classList.add("invitation-open");
+
+if (music && !letterGate) {
   syncMusicButton(false);
   startMusicWithFallback();
   enableAutoPlayFallback();
@@ -191,6 +197,15 @@ if (music) {
     if (!document.hidden) startMusicWithFallback();
   });
 }
+
+openInvitation?.addEventListener("click", async () => {
+  document.body.classList.add("invitation-open");
+  letterGate.classList.add("opening");
+  await playMusic();
+  window.setTimeout(() => {
+    letterGate.hidden = true;
+  }, 950);
+});
 
 musicToggle?.addEventListener("click", async () => {
   if (!music) return;
