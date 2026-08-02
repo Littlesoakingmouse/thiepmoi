@@ -59,6 +59,27 @@ textarea {
   line-height: 1.5;
 }
 
+.dashboard-status {
+  display: inline-flex;
+  margin-top: 12px;
+  border-radius: 8px;
+  padding: 8px 11px;
+  color: #10265c;
+  background: rgba(238, 242, 255, 0.95);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.dashboard-status.error {
+  color: #9f1239;
+  background: rgba(255, 228, 230, 0.95);
+}
+
+.dashboard-status.success {
+  color: #166534;
+  background: rgba(220, 252, 231, 0.95);
+}
+
 .creator-card,
 .list-card {
   border: 1px solid rgba(16, 38, 92, 0.12);

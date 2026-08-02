@@ -10,6 +10,7 @@ const rsvpList = document.querySelector("#rsvpList");
 const clearInvites = document.querySelector("#clearInvites");
 const clearRsvps = document.querySelector("#clearRsvps");
 const exportCsv = document.querySelector("#exportCsv");
+const dashboardStatus = document.querySelector("#dashboardStatus");
 
 const INVITES_KEY = "graduation-invites";
 const RSVPS_KEY = "graduation-rsvps";
@@ -18,6 +19,16 @@ let invitesCache = [];
 let rsvpsCache = [];
 let apiAvailable = window.location.protocol !== "file:";
 let adminToken = localStorage.getItem(ADMIN_TOKEN_KEY) || "";
+
+function shouldUseRemoteApi() {
+  return window.location.protocol !== "file:";
+}
+
+function setDashboardStatus(message, type = "") {
+  if (!dashboardStatus) return;
+  dashboardStatus.textContent = message;
+  dashboardStatus.className = `dashboard-status${type ? ` ${type}` : ""}`;
+}
 
 function readList(key) {
   try {
@@ -48,6 +59,13 @@ async function apiRequest(path, options = {}) {
   if (!response.ok) {
     const error = new Error(`API error ${response.status}`);
     error.status = response.status;
+    const detailText = await response.text();
+    try {
+      const detail = JSON.parse(detailText);
+      error.detail = detail.error || detailText;
+    } catch {
+      error.detail = detailText;
+    }
     throw error;
   }
   if (response.status === 204) return null;
@@ -174,22 +192,29 @@ function downloadCsv() {
 }
 
 async function loadDashboard() {
-  if (apiAvailable) {
+  if (shouldUseRemoteApi()) {
+    setDashboardStatus("Đang đọc danh sách từ Supabase...");
     try {
-      const [invites, rsvps] = await Promise.all([
-        adminRequest("/api/invites"),
-        adminRequest("/api/rsvps"),
-      ]);
+      const invites = await adminRequest("/api/invites");
+      const rsvps = await adminRequest("/api/rsvps");
       invitesCache = invites;
       rsvpsCache = rsvps;
       writeList(INVITES_KEY, invitesCache);
       writeList(RSVPS_KEY, rsvpsCache);
       renderInvites();
       renderRsvps();
+      apiAvailable = true;
+      setDashboardStatus("Đã đồng bộ danh sách từ Supabase.", "success");
       return;
-    } catch {
+    } catch (error) {
       apiAvailable = false;
+      setDashboardStatus(
+        `Không đọc được Supabase: ${error.detail || error.message}. Đang hiển thị dữ liệu tạm trên trình duyệt này.`,
+        "error"
+      );
     }
+  } else {
+    setDashboardStatus("Đang chạy offline, dữ liệu được lưu tạm trên trình duyệt này.");
   }
 
   invitesCache = readList(INVITES_KEY);
@@ -212,16 +237,26 @@ inviteForm.addEventListener("submit", async (event) => {
   };
 
   try {
-    const savedInvite = apiAvailable
+    const savedInvite = shouldUseRemoteApi()
       ? await adminRequest("/api/invites", {
           method: "POST",
           body: JSON.stringify({ name, url }),
         })
       : fallbackInvite;
     invitesCache.unshift(savedInvite);
-  } catch {
+    apiAvailable = shouldUseRemoteApi();
+    setDashboardStatus(
+      shouldUseRemoteApi() ? "Đã lưu thư mời vào Supabase." : "Đã lưu thư mời tạm trên trình duyệt.",
+      "success"
+    );
+  } catch (error) {
     apiAvailable = false;
-    invitesCache.unshift(fallbackInvite);
+    copyStatus.textContent = `Chưa lưu được lên Supabase: ${error.detail || error.message}`;
+    setDashboardStatus(
+      `Không lưu được thư mời lên Supabase: ${error.detail || error.message}`,
+      "error"
+    );
+    return;
   }
 
   writeList(INVITES_KEY, invitesCache);
@@ -246,26 +281,38 @@ copyLink.addEventListener("click", async () => {
 clearInvites.addEventListener("click", async () => {
   if (!confirm("Xóa toàn bộ danh sách thư mời đã tạo?")) return;
   try {
-    if (apiAvailable) await adminRequest("/api/invites", { method: "DELETE" });
-  } catch {
+    if (shouldUseRemoteApi()) await adminRequest("/api/invites", { method: "DELETE" });
+  } catch (error) {
     apiAvailable = false;
+    setDashboardStatus(`Không xoá được danh sách trên Supabase: ${error.detail || error.message}`, "error");
+    return;
   }
   invitesCache = [];
   writeList(INVITES_KEY, invitesCache);
   renderInvites();
+  setDashboardStatus(
+    shouldUseRemoteApi() ? "Đã xoá danh sách thư mời trên Supabase." : "Đã xoá danh sách tạm trên trình duyệt.",
+    "success"
+  );
 });
 
 clearRsvps.addEventListener("click", async () => {
   if (!confirm("Xóa toàn bộ xác nhận và lời nhắn đã lưu?")) return;
   try {
-    if (apiAvailable) await adminRequest("/api/rsvps", { method: "DELETE" });
-  } catch {
+    if (shouldUseRemoteApi()) await adminRequest("/api/rsvps", { method: "DELETE" });
+  } catch (error) {
     apiAvailable = false;
+    setDashboardStatus(`Không xoá được RSVP trên Supabase: ${error.detail || error.message}`, "error");
+    return;
   }
   rsvpsCache = [];
   writeList(RSVPS_KEY, rsvpsCache);
   localStorage.removeItem("graduation-rsvp");
   renderRsvps();
+  setDashboardStatus(
+    shouldUseRemoteApi() ? "Đã xoá RSVP trên Supabase." : "Đã xoá RSVP tạm trên trình duyệt.",
+    "success"
+  );
 });
 
 exportCsv.addEventListener("click", downloadCsv);
