@@ -10,9 +10,19 @@ function json(payload, status = 200) {
   });
 }
 
+function cleanEnvValue(value) {
+  const cleaned = String(value || "")
+    .trim()
+    .replace(/^['"]|['"]$/g, "")
+    .replace(/;$/, "")
+    .trim();
+  const assignment = cleaned.match(/^[A-Z0-9_]+\s*=\s*(.+)$/);
+  return assignment ? assignment[1].trim().replace(/^['"]|['"]$/g, "") : cleaned;
+}
+
 function getSupabaseConfig(env) {
-  const url = String(env.SUPABASE_URL || "").replace(/\/$/, "");
-  const key = String(env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SECRET_KEY || "");
+  const url = cleanEnvValue(env.SUPABASE_URL).replace(/\/$/, "");
+  const key = cleanEnvValue(env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SECRET_KEY);
 
   if (!url || !key) {
     throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SECRET_KEY");
